@@ -32,9 +32,10 @@ feature.names <- c(paste(feature.names, "-mean", sep=""), paste(feature.names, "
 names(feature.data) <- feature.names
 
 # reads in activity data
+activities <- c("walking", "walkingupstairs", "walkingdownstairs", "sitting", "standing", "laying")
 activity.data <- read.table("UCI HAR Dataset/test/y_test.txt")
 activity.data <- rbind(activity.data, read.table("UCI HAR Dataset/train/y_train.txt"))
-activity.data[,1] <- factor(activity.data[,1], labels = c("walking", "walkingupstairs", "walkingdownstairs", "sitting", "standing", "laying"))
+activity.data[,1] <- factor(activity.data[,1], labels = activities)
 names(activity.data) <- "activity"
 
 # reads in subject data
@@ -48,11 +49,18 @@ all.data <- cbind(feature.data, activity.data, subject.data)
 
 # create a secondary dataframe of variable means by subject and activity
 make.mean.vector <- function(vec) {
-  tapply(vec, interaction(all.data$subject, all.data$activity), mean)
+  output <- tapply(vec, interaction(all.data$subject, all.data$activity), mean)
+  names(output) <- c()
+  output
 }
 all.means <- lapply(1:ncol(feature.data), function(i) make.mean.vector(all.data[,i]))
 all.means <- as.data.frame(all.means)
 names(all.means) <- feature.names
+
+# include subject and activity columns
+all.means <- cbind(factor(rep(1:30, 6)), all.means)
+all.means <- cbind(unlist(lapply(activities, function(a) rep(a,30))), all.means)
+names(all.means)[1:2] <- c("subject", "activity")
 
 # writes out the data frame of variable averages
 write.table(all.means, file = "meansBySubjectAndActivity.txt", row.names = F)
