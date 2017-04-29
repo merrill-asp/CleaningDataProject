@@ -2,7 +2,7 @@
 
 ## Code Book
 
-Adapted from the UCI HAR Dataset README:
+Adapted from the UCI HAR Dataset README (http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones):
 
 The features selected for this database come from accelerometer and gyroscope 3-axial raw signals produced by a Samsung Galaxy II smartphone while subjects were wearing the smartphone on the waist during various activities. These time domain signals were captured at a constant rate of 50 Hz in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (accelerometer-xyz and gravity-xyz) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
